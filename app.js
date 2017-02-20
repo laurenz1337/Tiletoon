@@ -11,7 +11,7 @@ app.get('/', function(req, res){
 });
 
 function Tile(size) {
-    this.color = [r: 0, g: 0, b: 0];
+    this.color = {r: 0, g: 0, b: 0};
     this.size = size;
 }
 
@@ -38,11 +38,13 @@ io.on('connection', function(socket){
 
 
     socket.on("startGame", function(data) {
-        console.log("Creating new field...");
-
         board.generate(data.fieldSize, data.tileSize);
 
-        io.emit("gameSetupComple", board);
+        console.log(data);
+
+        board.generate(data.boardSize, data.tileSize);
+
+        io.emit("gameSetupComplete", { board: board });
     });
 
     socket.on("paintTile", function(data) {
