@@ -1,0 +1,86 @@
+body {
+    margin: 0;
+}
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    background: #2d3a47;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wrapper form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 40vh;
+}
+.wrapper input {
+    border: 5px solid #fc6563;
+    border-radius: 30px;
+    text-align: center;
+    height: 30px;
+    padding: 10px;
+    width: 250px;
+    font-weight: 400;
+    font-family: 'Ubuntu', sans-serif !important;
+    font-size: 1.2em;
+}
+.wrapper input[type="submit"] {
+    display: block;
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+}
+.label {
+    font-family: 'Ubuntu', sans-serif;
+    color: #fff;
+    font-size: 1.2em;
+}
+.colorwrapper {
+    display: flex;
+    height: 150px;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 50px;
+}
+.white, .red {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.white {
+    background-color: #fff;
+}
+.red {
+    background-color: #FC6563;
+}
+#board {
+    background-color: #fff;
+    table-layout: fixed;
+    border-collapse: collapse;
+    user-select: none;
+    cursor: default;
+    font-size: 0px;
+}
+#board td {
+    font-family: 'Ubuntu', sans-serif;
+    text-align: center;
+    color: #333;
+}
+#board tr:nth-child(even) td:nth-child(odd) {
+    background-color: #FC6563;
+}
+#board tr:nth-child(odd) td:nth-child(even) {
+    background-color: #FC6563;
+}
+#board tr:nth-child(even) td:nth-child(even) {
+    background-color: #FFFFFF;
+}
+#board tr:nth-child(odd) td:nth-child(odd) {
+    background-color: #FFFFFF;
+}
