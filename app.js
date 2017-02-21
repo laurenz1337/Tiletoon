@@ -22,6 +22,9 @@ function Tilemap() {
 Tilemap.prototype.generate = function(size, tileSize) {
     // reset the old array for safety
     this.data = [];
+	this.size = size;
+	this.tileSize = tileSize;
+	
     for(var i = 0; i < size * size; i++) {
         this.data.push(new Tile(tileSize));
     }
