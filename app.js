@@ -11,7 +11,7 @@ app.get('/', function(req, res){
 });
 
 function Tile(size) {
-    this.color = {r: 0, g: 0, b: 0};
+    this.color = "white";
     this.size = size;
 }
 
@@ -51,11 +51,14 @@ io.on('connection', function(socket){
 
         board.generate(data.boardSize, data.tileSize);
 
-        io.emit("gameSetupComplete", { board: board });
+        io.emit("gameSetupComplete", { board: board, color: data.tileColor });
     });
 
     socket.on("paintTile", function(data) {
-
+        if(data.index >= board.size * board.size) return;
+        
+        board.data[data.index].color = data.color;
+        io.emit("paintTile", data);
     });
 
 });
