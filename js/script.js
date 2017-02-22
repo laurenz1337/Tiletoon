@@ -28,11 +28,11 @@ Tilemap.prototype.generate = function(size, tileSize) {
     }
 }
 
-
 socket.on("gameSetupComplete", function(data) {
 	$(".setupForm").remove();
 
-	board = data.board;
+	board = new Tilemap();
+	board.data = data.board;
 	console.log(board);
 
 
@@ -40,7 +40,7 @@ socket.on("gameSetupComplete", function(data) {
 	canvas = elem.getContext("2d");
 	elem.width = board.size * board.tileSize;
 	elem.height = board.size * board.tileSize;
-	
+
 	window.requestAnimationFrame(update);
 });
 
@@ -51,13 +51,22 @@ function update() {
 }
 
 function printBoard() {
-	console.log(board);
+	//console.log(board);
 	for(var i = 0; i < board.size; i++) {
 		for(var b = 0; b < board.size; b++) {
-			canvas.fillStyle = "green";
+			if ((i + b) % 2) {
+				canvas.fillStyle = "#fc6563"
+			} else {
+				canvas.fillStyle = "white";
+			}
 			canvas.fillRect(i * board.tileSize, b * board.tileSize, board.tileSize, board.tileSize);
 		}
 	}
-
 }
 
+$('#board').mousemove(function(event) {
+    var left = (event.pageX - $(this).offset().left);
+    var top = (event.pageY - $(this).offset().top);
+
+	console.log(board.TwoDToIndex(left, top));
+});
