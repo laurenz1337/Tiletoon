@@ -1,3 +1,5 @@
+"use strict";
+
 var socket = io();
 var board;
 var canvas;
@@ -16,8 +18,10 @@ function Tile(size) {
     this.size = size;
 }
 
-function Tilemap() {
+function Tilemap(boardSize, tileSize) {
     this.data = [];
+	this.size = boardSize || 0;
+	this.tileSize = tileSize || 0;
 }
 
 Tilemap.prototype.generate = function(size, tileSize) {
@@ -28,11 +32,17 @@ Tilemap.prototype.generate = function(size, tileSize) {
     }
 }
 
+Tilemap.prototype.TwoDToIndex = function(x, y) {
+	return x + y * this.size;
+}
+
 socket.on("gameSetupComplete", function(data) {
 	$(".setupForm").remove();
 
 	board = new Tilemap();
-	board.data = data.board;
+	board.data = data.board.data;
+	board.tileSize = data.board.tileSize;
+	board.size = data.board.size;
 	console.log(board);
 
 
@@ -68,5 +78,5 @@ $('#board').mousemove(function(event) {
     var left = (event.pageX - $(this).offset().left);
     var top = (event.pageY - $(this).offset().top);
 
-	console.log(board.TwoDToIndex(left, top));
+	console.log(board.TwoDToIndex(Math.floor(left / board.tileSize), Math.floor(top / board.tileSize)));
 });
