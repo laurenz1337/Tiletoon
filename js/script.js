@@ -9,7 +9,7 @@ Game start
 Can be triggered by either player
 */
 $("form").submit(function() {
-	socket.emit("startGame", { boardSize: parseInt($("#size").val()), tileSize: parseInt($("#tilesize").val()) });
+	socket.emit("startGame", { boardSize: parseInt($("#size").val()), tileSize: parseInt($("#tilesize").val()), tileColor: $('.setupForm input[type=radio]:checked').attr('class')  });
 	return false;
 });
 
