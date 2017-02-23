@@ -4,6 +4,7 @@ var socket = io();
 var board;
 var canvas;
 var color;
+var drawing;
 
 /*
 Game start
@@ -76,14 +77,21 @@ function printBoard() {
 	}
 }
 
-$('#board').mousemove(function(event) {
-    var left = (event.pageX - $(this).offset().left);
-    var top = (event.pageY - $(this).offset().top);
-	var index = board.TwoDToIndex(Math.floor(left / board.tileSize), Math.floor(top / board.tileSize));
-	if(index >= board.size * board.size) return;
-	console.log(color);
-	board.data[index].color = color;
-	socket.emit("paintTile", { index: index, color: color });
+$('#board').on('mousedown',function() {
+	drawing = 1;
+});
 
-	console.log();
+$('#board').on('mouseup',function(){
+	drawing = 0;
+});
+
+$('#board').on('mousemove',function(event) {
+	if (drawing) {
+		var left = (event.pageX - $(this).offset().left);
+		var top = (event.pageY - $(this).offset().top);
+		var index = board.TwoDToIndex(Math.floor(left / board.tileSize), Math.floor(top / board.tileSize));
+		if(index >= board.size * board.size) return;
+		board.data[index].color = color;
+		socket.emit("paintTile", { index: index, color: color });
+	}
 });
